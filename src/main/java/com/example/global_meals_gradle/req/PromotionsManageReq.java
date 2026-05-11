@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * 促銷活動管理用的請求參數，涵蓋以下四種用途：
  *   - 新增促銷活動（promotions 表）
@@ -63,6 +65,8 @@ public class PromotionsManageReq {
 	//   true  → 開啟活動（promotions.is_active = 1），只改 promotions，贈品不動
 	//   false → 關閉活動（promotions.is_active = 0），同步把底下所有贈品 is_active 設為 0
 	private boolean active;
+	
+	private String description;
 
 	public String getName() {
 		return name;
@@ -126,6 +130,14 @@ public class PromotionsManageReq {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

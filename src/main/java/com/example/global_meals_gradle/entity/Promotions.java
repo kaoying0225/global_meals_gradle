@@ -30,7 +30,7 @@ public class Promotions {
 	@Column(name = "promotion_img")
 	private byte[] promotionImg;
 
-	@Column(name = "description", length = 45)
+	@Column(name = "description", length = 500)
 	private String description;
 
 	public int getId() {

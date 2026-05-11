@@ -83,7 +83,7 @@ public class ProductsController {
 	
 	@GetMapping(value = "/image/{id}")
 	@Operation(summary = "獲取商品圖片", description = "根據 ID 讀取圖片二進位流")
-public ResponseEntity<byte[]> getProductImage(@PathVariable("id") int id) {
+	public ResponseEntity<byte[]> getProductImage(@PathVariable("id") int id) {
     Products product = productsDao.findById(id);
     
     if (product == null || product.getFoodImg() == null) {

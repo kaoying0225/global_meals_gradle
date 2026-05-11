@@ -52,6 +52,7 @@ public class PromotionsManageService {
 			vo.setStartTime(p.getStartTime());
 			vo.setEndTime(p.getEndTime());
 			vo.setActive(p.isActive());
+			vo.setDescription(p.getDescription());
 
 			List<PromotionsGifts> gifts = promotionsGiftsDao.findByPromotionsId(p.getId());
 			List<GiftDetailVo> giftVos = new ArrayList<>();
@@ -184,6 +185,10 @@ public class PromotionsManageService {
 		if (!req.getEndTime().isAfter(req.getStartTime())) {
 			throw new RuntimeException(ReplyMessage.PROMOTION_DATE_ERROR.getMessage());
 		}
+	    // ✅ 新增：description 長度驗證（對應 DB column length = 500）
+        if (req.getDescription() != null && req.getDescription().length() > 500) {
+            throw new RuntimeException("活動描述不得超過 500 個字元");
+        }
 
 		Promotions promotion = new Promotions();
 		promotion.setName(req.getName());
@@ -191,6 +196,7 @@ public class PromotionsManageService {
 		promotion.setEndTime(req.getEndTime());
 		promotion.setActive(true);
 		promotion.setPromotionImg(imageBytes);
+		promotion.setDescription(req.getDescription());
 
 		Promotions saved = promotionsDao.save(promotion);
 

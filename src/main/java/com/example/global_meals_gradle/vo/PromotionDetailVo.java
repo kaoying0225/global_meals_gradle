@@ -31,6 +31,8 @@ public class PromotionDetailVo {
 	// 該活動底下所有贈品規則的清單（包含啟用與停用的）
 	// 每一個元素是 GiftDetailVo，包含門檻金額、庫存、商品名稱等
 	private List<GiftDetailVo> gifts;
+	
+	private String description;
 
 	public int getId() {
 		return id;
@@ -78,6 +80,14 @@ public class PromotionDetailVo {
 
 	public void setGifts(List<GiftDetailVo> gifts) {
 		this.gifts = gifts;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

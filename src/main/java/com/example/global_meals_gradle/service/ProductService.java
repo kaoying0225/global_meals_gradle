@@ -328,20 +328,23 @@ public class ProductService {
 
 	// 查詢單一商品的詳細資料
 	public AdminProductRes getProductById(int id, HttpSession session) {
-		AdminProductRes authRes = validateAdminAccess(session);
-		if (authRes != null)
+		AdminProductRes authRes = validateProductViewAccess(session);
+		if (authRes != null) {
 			return authRes;
+		}
 
 		Products product = productsDao.findById(id);
 		if (product == null) {
-			return new AdminProductRes(ReplyMessage.PRODUCT_NOT_FOUND.getCode(), //
+			return new AdminProductRes(
+					ReplyMessage.PRODUCT_NOT_FOUND.getCode(),
 					ReplyMessage.PRODUCT_NOT_FOUND.getMessage());
 		}
 
-		return new AdminProductRes(ReplyMessage.SUCCESS.getCode(), //
-				ReplyMessage.SUCCESS.getMessage(), convertToAdminVo(product));
+		return new AdminProductRes(
+				ReplyMessage.SUCCESS.getCode(),
+				ReplyMessage.SUCCESS.getMessage(),
+				convertToAdminVo(product));
 	}
-
 	// 工具 - 檢查參數
 	private AdminProductRes checkParam(ProductCreateReq req, MultipartFile file, //
 			boolean isUpdate, Integer productId) {
@@ -460,6 +463,38 @@ public class ProductService {
 		vo.setBranchName(branchMap.getOrDefault(inv.getGlobalAreaId(), "未知分店"));
 		vo.setMasterActive(isMasterActive);
 		return vo;
+	}
+	
+	// 工具 - 商品查看權限檢查
+	// 用於查詢商品詳情、分店庫存補商品資訊等「只讀」功能
+	private AdminProductRes validateProductViewAccess(HttpSession session) {
+		Staff staff = (Staff) session.getAttribute(SESSION_KEY);
+
+		// 檢查登入
+		if (staff == null) {
+			return new AdminProductRes(
+					ReplyMessage.NOT_LOGIN.getCode(),
+					ReplyMessage.NOT_LOGIN.getMessage());
+		}
+
+		// 檢查帳號狀態
+		if (!staff.isStatus()) {
+			return new AdminProductRes(
+					ReplyMessage.ACCOUNT_DISABLED.getCode(),
+					ReplyMessage.ACCOUNT_DISABLED.getMessage());
+		}
+
+		// 商品詳情屬於查看用途，允許後台管理者、分店長、副店長、員工查詢
+		if (staff.getRole() != StaffRole.ADMIN
+				&& staff.getRole() != StaffRole.REGION_MANAGER
+				&& staff.getRole() != StaffRole.MANAGER_AGENT
+				&& staff.getRole() != StaffRole.STAFF) {
+			return new AdminProductRes(
+					ReplyMessage.OPERATE_ERROR.getCode(),
+					"權限不足，無法查看商品資料");
+		}
+
+		return null;
 	}
 
 	// 2. 工具 - 管理員權限檢查 (用於新增、修改、刪除)

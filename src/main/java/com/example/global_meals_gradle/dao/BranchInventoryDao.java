@@ -89,4 +89,13 @@ public interface BranchInventoryDao extends JpaRepository<BranchInventory, Integ
 	@Modifying(clearAutomatically = true)
 	@Query(value="UPDATE branch_inventory SET is_active = :active WHERE product_id = :productId", nativeQuery = true)
 	void updateActiveByProductId(@Param("productId") int productId, @Param("active") boolean active);
+	
+	@Query(value = "SELECT * FROM branch_inventory  "
+		    + " WHERE is_active = 1 AND global_area_id BETWEEN 1 AND 6 ", nativeQuery = true)
+	public List<BranchInventory> findAllByActive();
+	
+	// 專門抓特定分店且啟用的商品
+	@Query(value = "SELECT * FROM branch_inventory  "
+		    + " WHERE is_active = ?2 AND global_area_id = ?1 ", nativeQuery = true)
+	public List<BranchInventory> findByGlobalAreaIdAndIsActive(int globalAreaId, int isActive);
 }

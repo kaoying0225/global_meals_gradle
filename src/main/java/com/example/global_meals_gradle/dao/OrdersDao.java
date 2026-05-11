@@ -210,5 +210,18 @@ public interface OrdersDao extends JpaRepository<Orders, OrdersId> {
 			+ "AND r.id = :regionId " + "AND o.orders_status = 'PICKED_UP' " + "AND d.is_gift = 0 "
 			+ "GROUP BY d.product_id, p.name " + "ORDER BY totalQuantity DESC " + "LIMIT 5", nativeQuery = true)
 	List<Object[]> getTop5MonthlySalesByRegion(@Param("yearMonth") String yearMonth, @Param("regionId") int regionId);
+	
+	
+	
+	/* 新增訂單(測試) */
+	@Modifying
+	@Transactional
+	@Query(value = "INSERT INTO orders (id, order_date_id, order_cart_id, global_area_id, member_id, phone, " //
+			+ " subtotal_before_tax, tax_amount, total_amount, total_cost, payment_method, " //
+			+ "orders_status, pay_status, completed_at, is_use_discount) " //
+			+ "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)", nativeQuery = true)
+	public void insertTest(String id, String orderDateId, int orderCartId, int globalAreaId, int memberId, String phone, //
+			BigDecimal subtotalBeforeTax, BigDecimal taxAmount, BigDecimal totalAmount, BigDecimal totalCost, //
+			String paymentMethod, String ordersStatus, String payStatus, LocalDateTime completedAt, boolean useDiscount);
 
 }

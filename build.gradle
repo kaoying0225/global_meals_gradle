@@ -44,6 +44,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	
+	// Java Faker (核心：用來產生隨機姓名、Email、地址)
+	implementation 'com.github.javafaker:javafaker:1.0.2'
+
+    // Lombok (強烈建議：減少寫 Getter/Setter 的時間)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework:spring-test'
 }
 
 tasks.named('test') {

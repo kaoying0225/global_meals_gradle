@@ -108,12 +108,12 @@ public class RegionsService {
 	
 	// 取得各國基本設定
 	public RegionsRes getAll(HttpSession session) {
-		// 權限(所有Staff)
-		Staff staff = (Staff) session.getAttribute(StaffController.SESSION_KEY);
-		if (staff == null) {
-			return new RegionsRes(ReplyMessage.NOT_LOGIN.getCode(), //
-					ReplyMessage.NOT_LOGIN.getMessage());
-		}
+//		// 權限(所有Staff)
+//		Staff staff = (Staff) session.getAttribute(StaffController.SESSION_KEY);
+//		if (staff == null) {
+//			return new RegionsRes(ReplyMessage.NOT_LOGIN.getCode(), //
+//					ReplyMessage.NOT_LOGIN.getMessage());
+//		}
 		return new RegionsRes(ReplyMessage.SUCCESS.getCode(), //
 				ReplyMessage.SUCCESS.getMessage(), regionsDao.getAll());
 	}

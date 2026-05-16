@@ -580,15 +580,13 @@ public class OrdersService {
 		if (PayStatus.PAID.name().equals(order.getPayStatus().name())) {
 			return new BasicRes(ReplyMessage.SUCCESS.getCode(), "訂單已支付完成，無需重複操作");
 		}
-		// 如果訂單是其他狀態（如 CANCELLED），則不允許付款
-		if (!PayStatus.UNPAID.name().equals(order.getPayStatus().name())) {
-			return new BasicRes(ReplyMessage.ORDERS_STATUS_ERROR.getCode(), "訂單狀態錯誤，無法付款");
-		}
 		try {
 			// 如果線上選現金付款，會走這裡，不會繼續往下走
 			if (req.getPaymentMethod().equalsIgnoreCase("CASH") && staff == null) {
+				log.info("線上點餐臨櫃付款，訂單編號: {} - {}", //
+						req.getOrderDateId(), req.getId());
 				int result = ordersDao.updatePaymentMethod(req.getId(), req.getOrderDateId(), //
-						req.getPaymentMethod());
+						req.getPaymentMethod(), PayStatus.UNPAID.getPayStatus());
 				if (result > 0) {
 					return new BasicRes(ReplyMessage.SUCCESS.getCode(), ReplyMessage.SUCCESS.getMessage());
 				}

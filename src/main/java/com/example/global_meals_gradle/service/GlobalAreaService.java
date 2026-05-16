@@ -119,12 +119,12 @@ public class GlobalAreaService {
 
 	// 取得分店清單
 	public GlobalAreaRes getAllBranch(HttpSession session) {
-		// 權限(所有Staff)
-		Staff staff = (Staff) session.getAttribute(StaffController.SESSION_KEY);
-		if (staff == null) {
-			return new GlobalAreaRes(ReplyMessage.NOT_LOGIN.getCode(), //
-					ReplyMessage.NOT_LOGIN.getMessage());
-		}
+//		// 權限(所有Staff)
+//		Staff staff = (Staff) session.getAttribute(StaffController.SESSION_KEY);
+//		if (staff == null) {
+//			return new GlobalAreaRes(ReplyMessage.NOT_LOGIN.getCode(), //
+//					ReplyMessage.NOT_LOGIN.getMessage());
+//		}
 		return new GlobalAreaRes(ReplyMessage.SUCCESS.getCode(), //
 				ReplyMessage.SUCCESS.getMessage(), globalAreaDao.getAll());
 	}

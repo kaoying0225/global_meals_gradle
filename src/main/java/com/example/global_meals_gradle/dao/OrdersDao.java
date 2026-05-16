@@ -40,9 +40,9 @@ public interface OrdersDao extends JpaRepository<Orders, OrdersId> {
 	/* 選擇現金付款新增(更新)的資料(付款方式) */
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE orders SET payment_method = ?3 WHERE id = ?1 " //
+	@Query(value = "UPDATE orders SET payment_method = ?3, pay_status = ?4 WHERE id = ?1 " //
 			+ " AND order_date_id = ?2 AND pay_status = 'UNPAID'", nativeQuery = true)
-	public int updatePaymentMethod(String id, String orderDateId, String paymentMethod);
+	public int updatePaymentMethod(String id, String orderDateId, String paymentMethod, String payStatus);
 
 	/* 現場現金付款完成新增(更新)的資料(付款狀態) */
 	@Modifying

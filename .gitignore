@@ -46,5 +46,5 @@ logs/
 # === Local Database & Docker Data (自訂排除) ===
 mysql_data/
 init.sql
-Dockerfile
+
 docker-compose.yml

@@ -1,0 +1,24 @@
+# 編輯器與系統垃圾
+.git
+.vscode
+.idea
+.settings
+.metadata
+bin
+out
+
+# Gradle 編譯垃圾
+.gradle
+build
+
+# 資料庫資料 (關鍵！)
+mysql_data
+*.log
+logs
+
+init.sql
+
+# API Key 設定檔
+src/main/resources/application-secrets.properties
+
+docker-compose.yml

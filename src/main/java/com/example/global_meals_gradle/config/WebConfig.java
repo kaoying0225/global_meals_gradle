@@ -27,7 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
 				// 允許的來源網域：使用 Pattern 可以同時支援本機開發與未來部署後的雲端環境
 				.allowedOriginPatterns("http://localhost:4200", // Angular 開發環境
 						"https://*.render.com", // 允許所有 Render 部署的子網域
-						"http://127.0.0.1:4200" // 有些瀏覽器會識別為不同來源，一併加入
+						"http://127.0.0.1:4200" ,// 有些瀏覽器會識別為不同來源，一併加入
+						"https://kaoying0225.github.io"
 				)
 				// 允許的 HTTP 方法：GET (讀取), POST (新增), PUT (修改), DELETE (刪除))
 				.allowedMethods("GET", "POST", "PUT", "DELETE","PATCH")

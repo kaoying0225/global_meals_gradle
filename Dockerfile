@@ -1,8 +1,6 @@
 # 容器化編譯(自動模式)
 FROM gradle:9-jdk17 AS build
 
-COPY . /app
-
 WORKDIR /app
 
 # 利用 Docker 快取機制，先只複製設定檔並下載依賴套件

@@ -22,10 +22,10 @@ WORKDIR /app
 
 # 3. 將 Gradle 打包好的 JAR 複製到容器中
 # 這裡注意：路徑必須指向 build/libs/
-COPY --from=build /app/build/libs/*.jar line-bot.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 # 4. 暴露應用程式埠號 (Spring Boot 預設為 8080)
 EXPOSE 8080
 
 # 5. 啟動指令
-ENTRYPOINT ["java", "-jar", "line-bot.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.global_meals_gradle.constants.OrdersStatus;
@@ -119,11 +120,11 @@ public class OrdersController {
 			@Parameter(hidden = true) HttpSession httpSession) {
 		return ordersService.getOrderByPhone(phone, httpSession);
 	}
-
+	
 	// 前端點擊「前往付款」時請求的 API
 	@GetMapping("/goPay")
 	@Operation(summary = "前往付款頁面", description = "根據選擇的付款方式 (ECPAY/LINEPAY) 轉導至金流平台")
-	public String goPay(@RequestParam String orderDateId, @RequestParam("id") String id, //
+	public String goPay(@RequestParam("orderDateId") String orderDateId, @RequestParam("id") String id, //
 			@RequestParam("way") String way) {
 		// 判斷付款方式是否為綠界 (ECPAY) 還是LINE Pay
 		if ("ECPAY".equalsIgnoreCase(way)) {

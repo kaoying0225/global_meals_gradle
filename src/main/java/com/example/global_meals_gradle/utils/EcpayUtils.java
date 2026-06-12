@@ -13,7 +13,7 @@ public class EcpayUtils {
         // 1. 使用 TreeMap 自動將所有傳入參數依據字母 A-Z 進行排序 (綠界強制要求)
         TreeMap<String, String> sortedParams = new TreeMap<>(params);
 
-        // 2. 組合字串：HashKey=xxx&key1=value1&key2=value2&...&HashIV=xxx
+        // 2. 組合字串(參數最前面要加 HAshKey，最後面要加 HashIV)：HashKey=xxx&key1=value1&key2=value2&...&HashIV=xxx
         StringBuilder sb = new StringBuilder();
         // 依照規則，最前面要放 HashKey
         sb.append("HashKey=").append(hashKey);
